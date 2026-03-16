@@ -1,0 +1,32 @@
+# ---- Этап 1: Сборка зависимостей ----
+FROM python:3.12-slim AS builder
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем файл с зависимостями
+COPY requirements.txt .
+
+# Устанавливаем зависимости в отдельную директорию
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+# ---- Этап 2: Финальный образ ----
+FROM python:3.12-slim
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем установленные зависимости из этапа builder
+COPY --from=builder /root/.local /root/.local
+
+# Делаем так, чтобы программы из ~/.local были в PATH
+ENV PATH=/root/.local/bin:$PATH
+
+# Копируем код приложения
+COPY . .
+
+# Указываем порт, который будет использовать приложение
+EXPOSE 5000
+
+# Команда для запуска приложения
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
