@@ -96,11 +96,12 @@
 
 ### Задание 6
 
-![virt4-6-1](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
-![virt4-6-2](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
-![virt4-6-3](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
-![virt4-6-4](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
-![virt4-6-5](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
+![virt4-6-1](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-6-1.png)
+![virt4-6-2](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-6-2.png)
+![virt4-6-3](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-6-3.png)
+![virt4-6-4](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-6-4.png)
+![virt4-6-5](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-6-5.png)
 
 
-### Задание 7
+
+
