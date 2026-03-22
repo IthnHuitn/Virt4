@@ -1,96 +1,106 @@
-# shvirtd-example-python
+# Домашнее задание к занятию "`Практическое применение Docker`" - `Ефимов Вячеслав`
 
-Учебный проект FastAPI-приложения для изучения Docker Compose.
 
-## Описание проекта
+### Инструкция по выполнению домашнего задания
 
-Это простое веб-приложение на FastAPI, предназначенное для изучения контейнеризации и работы с Docker Compose. Приложение демонстрирует:
+   1. Сделайте `fork` данного репозитория к себе в Github и переименуйте его по названию или номеру занятия, например, https://github.com/имя-вашего-репозитория/git-hw или  https://github.com/имя-вашего-репозитория/7-1-ansible-hw).
+   2. Выполните клонирование данного репозитория к себе на ПК с помощью команды `git clone`.
+   3. Выполните домашнее задание и заполните у себя локально этот файл README.md:
+      - впишите вверху название занятия и вашу фамилию и имя
+      - в каждом задании добавьте решение в требуемом виде (текст/код/скриншоты/ссылка)
+      - для корректного добавления скриншотов воспользуйтесь [инструкцией "Как вставить скриншот в шаблон с решением](https://github.com/netology-code/sys-pattern-homework/blob/main/screen-instruction.md)
+      - при оформлении используйте возможности языка разметки md (коротко об этом можно посмотреть в [инструкции  по MarkDown](https://github.com/netology-code/sys-pattern-homework/blob/main/md-instruction.md))
+   4. После завершения работы над домашним заданием сделайте коммит (`git commit -m "comment"`) и отправьте его на Github (`git push origin`);
+   5. Для проверки домашнего задания преподавателем в личном кабинете прикрепите и отправьте ссылку на решение в виде md-файла в вашем Github.
+   6. Любые вопросы по выполнению заданий спрашивайте в чате учебной группы и/или в разделе “Вопросы по заданию” в личном кабинете.
+   
+Желаем успехов в выполнении домашнего задания!
+   
+### Дополнительные материалы, которые могут быть полезны для выполнения задания
 
-- Создание веб-сервиса на FastAPI
-- Подключение к базе данных MySQL
-- Работу с прокси-серверами (Nginx → HAProxy → FastAPI)
-- Корректную настройку сетей Docker
-- Передачу IP-адресов через заголовки прокси
+1. [Руководство по оформлению Markdown файлов](https://gist.github.com/Jekins/2bf2d0638163f1294637#Code)
 
-### Функциональность
+---
 
-При обращении к главной странице приложение:
-1. Определяет IP-адрес клиента
-2. Записывает время запроса и IP-адрес в базу данных MySQL
-3. Возвращает эту информацию пользователю
+### Задание 1
 
-**Важно для обучения:** Если обращаться к приложению напрямую (минуя прокси), вы получите подсказку о неправильном выполнении задания.
+![virt4-1-1](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-1-1.png)
+![virt4-1-2*](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-1-2*.png)
+![virt4-1-3*](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-1-3*.png)
 
-## Способы запуска
 
-### 1. Запуск через Docker Compose
+---
 
-**Архитектура при запуске через Docker Compose:**
-```
-Клиент → Nginx (8090) → HAProxy (8080) → FastAPI App (5000) → MySQL
-```
+### Задание 2
 
-### 2. Локальный запуск для разработки
+[vulnerabilities.csv](https://github.com/IthnHuitn/Virt4/blob/main/vulnerabilities.csv)
 
-```bash
-# Создайте виртуальное окружение
-python3 -m venv venv
-source venv/bin/activate  # в Windows: venv\Scripts\activate
+```markdown
+# Отчет сканирования образа virt4-app
 
-# Установите зависимости
-pip install -r requirements.txt
+## Информация об образе
+- **Реестр:** cr.yandex/crp4tqna6q9f5m1p3tkc
+- **Репозиторий:** virt4-app
+- **Тег:** latest
+- **Digest:** sha256:e31e377100c9af7cf6b01db6e88b3af47fabb810e79356ad6b631f8fd12c19c4
 
-# Настройте переменные окружения для подключения к БД(не забудьте отдельно запустить БД)
-export DB_HOST='127.0.0.1'
-export DB_USER='app'  
-export DB_PASSWORD='very_strong'
-export DB_NAME='example'
+## Сводка уязвимостей
+| Уровень | Количество | Процент |
+|---------|------------|---------|
+| CRITICAL | 0 | 0% |
+| HIGH | 2 | ~3% |
+| MEDIUM | 9 | ~12% |
+| LOW | ~60 | ~84% |
+| UNDEFINED | 1 | ~1% |
 
-# Запустите приложение
-uvicorn main:app --host 0.0.0.0 --port 5000 --reload
-```
+## Критические уязвимости (HIGH)
+1. **CVE-2026-0861** - HIGH
+   - Пакеты: libc-bin, libc6
+   - Фикс доступен: 2.41-12+deb13u2
+   - Ссылка: https://avd.aquasec.com/nvd/cve-2026-0861
 
-**Требования для локального запуска:**
-- Python 3.12+
-- Запущенный сервер MySQL
-- База данных и пользователь, настроенные согласно переменным окружения
+## Медиум уязвимости (MEDIUM)
+- CVE-2025-15281 - libc-bin, libc6
+- CVE-2026-0915 - libc-bin, libc6
+- CVE-2025-7709 - libsqlite3-0
+- CVE-2026-4105 - libsystemd0, libudev1 (без фикса)
+- CVE-2026-27171 - zlib1g (без фикса)
 
-## Настройка базы данных MySQL
-
-```sql
-CREATE DATABASE example;
-CREATE USER 'app'@'localhost' IDENTIFIED BY 'very_strong';
-GRANT ALL PRIVILEGES ON example.* TO 'app'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-## Доступные эндпоинты
-
-- `GET /` - главная страница (записывает запрос в БД и возвращает время + IP)
-- `GET /requests` - просмотр всех записей из базы данных  
-- `GET /debug` - отладочная информация о заголовках запроса
-- `GET /docs` - автоматическая документация FastAPI (Swagger UI)
-
-## Переменные окружения
-
-| Переменная | Значение по умолчанию | Описание |
-|------------|----------------------|----------|
-| `DB_HOST` | `127.0.0.1` | Хост базы данных MySQL |
-| `DB_USER` | `app` | Пользователь БД |
-| `DB_PASSWORD` | `very_strong` | Пароль БД |
-| `DB_NAME` | `example` | Имя базы данных |
-
-## Проверка работы
-
-```bash
-# При правильной настройке через прокси
-curl http://localhost:8090
-
-# При прямом обращении (НЕПРАВИЛЬНО) 
-curl http://localhost:5000  
-# Получите подсказку о том, что нужно использовать порт 8090
+## Заключение
+Образ не содержит критических уязвимостей. 
+Рекомендуется обновить libc для устранения HIGH-уязвимостей.
 ```
 
-## Лицензия
 
-Этот проект распространяется под лицензией MIT (подробности в файле `LICENSE`).
+---
+
+### Задание 3
+
+![virt4-3-1](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-3-1.png)
+![virt4-3-2](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-3-2.png)
+
+
+### Задание 4
+
+![virt4-4-1](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-4-1.png)
+![virt4-4-2](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-4-2.png)
+![virt4-4-3](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-4-3.png)
+![virt4-4-4](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-4-4.png)
+
+
+### Задание 5
+
+![virt4-5-1](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
+![virt4-5-2](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-2.png)
+
+
+### Задание 6
+
+![virt4-6-1](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
+![virt4-6-2](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
+![virt4-6-3](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
+![virt4-6-4](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
+![virt4-6-5](https://github.com/IthnHuitn/Virt4/blob/main/screens/virt4-5-1.png)
+
+
+### Задание 7
